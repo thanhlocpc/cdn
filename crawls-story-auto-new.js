@@ -154,7 +154,7 @@
      myHeaders.append("Content-Type", "application/json");
 
      const raw = JSON.stringify({
-         "ids": ids
+         "ids": ids ? ids : []
      });
 
      const requestOptions = {
