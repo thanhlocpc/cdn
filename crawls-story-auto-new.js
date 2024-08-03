@@ -1,3 +1,6 @@
+const time_sleep_crawl_chap = 10000 // ms của bước 3
+ 
+ 
  // add listener
  document.getElementById("btn-b-1").addEventListener("click", prepareTruyenMoiCapNhat);
  document.getElementById("btn-b-2").addEventListener("click", crawlTruyenMoiCapNhat);
@@ -138,10 +141,10 @@
 
      for (let i = 0; i < data.length; i++) {
          const truyen = data[i];
-         const truyenId = truyen.truyen_id;
+         const truyenId = truyen.id;
          const truyenUrl = "https://truyenfull.io/" + truyenId + "/" + truyen.chap_id;
          const trang2 = window.open(truyenUrl, '_blank');
-         await sleep(1000 * 60 * 5);
+         await sleep(time_sleep_crawl_chap);
      }
 
      b3.innerHTML = "Xong bước 3";
