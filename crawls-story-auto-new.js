@@ -1,4 +1,5 @@
 const time_sleep_crawl_chap = 10000 // ms của bước 3
+const timeAuto = 20; // 20h tối chạy
  
  
  // add listener
@@ -181,3 +182,69 @@ const time_sleep_crawl_chap = 10000 // ms của bước 3
  function sleep(ms) {
      return new Promise(resolve => setTimeout(resolve, ms));
  }
+
+
+
+
+
+
+//  auto 8h toi
+function scheduleDailyTaskFor8PM() {
+    function setTaskFor8PM() {
+        const now = new Date();
+
+        const target = new Date();
+        target.setHours(timeAuto, 0, 0, 0);
+
+        // Nếu thời gian hiện tại đã qua 8 giờ tối, đặt mục tiêu cho 8 giờ tối ngày mai
+        if (now > target) {
+            target.setDate(target.getDate() + 1);
+        }
+
+        const delay = target - now;
+
+        // Sử dụng setTimeout để lên lịch cho tác vụ
+        setTimeout(function () {
+            console.log("Bây giờ là 8 giờ tối!");
+            // Thực hiện tác vụ của bạn ở đây
+            // Gọi hàm để thực hiện các nhấp chuột tuần tự
+            performSequentialClicks();
+            // Đặt lại lịch cho ngày hôm sau
+            setTaskFor8PM();
+        }, delay);
+    }
+
+    setTaskFor8PM();
+}
+
+setTimeout(() => {
+    scheduleDailyTaskFor8PM();
+}, 3000);
+
+
+function clickButton(buttonId) {
+    const button = document.getElementById(buttonId);
+    if (button) {
+        button.click();
+    }
+}
+
+function performSequentialClicks() {
+    // Thực hiện nhấp vào nút đầu tiên
+    clickButton('btn-b-1');
+
+    const intervalId = setInterval(() => {
+        const b1 = document.getElementById("btn-b-1");
+        if (b1.innerHTML === 'Xong bước 1') {
+            // bước 2
+            clickButton('btn-b-2');
+
+            // bước 3
+            setTimeout(() => {
+                clickButton('btn-b-3');
+            }, 30000);
+            clearInterval(intervalId);
+        }
+    }, 3000);
+}
+
